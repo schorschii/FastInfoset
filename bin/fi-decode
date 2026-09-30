@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+require dirname(__DIR__) . '/autoload.php';
+
+if ($argc > 2 || ($argc === 2 && in_array($argv[1], ['-h', '--help'], true))) {
+	fwrite(STDERR, 'Usage: fi-decode [input.fi|-] > output.xml'."\n");
+	exit($argc > 2 ? 2 : 0);
+}
+try {
+	$path = $argv[1] ?? '-';
+	$data = @file_get_contents($path === '-' ? 'php://stdin' : $path);
+	if ($data === false) {
+		throw new RuntimeException('Unable to read input');
+	}
+	$xml = (new FastInfoset\Decoder())->decode($data);
+	if (fwrite(STDOUT, $xml) !== strlen($xml)) {
+		throw new RuntimeException('Unable to write output');
+	}
+} catch (Throwable $e) {
+	fwrite(STDERR, $e->getMessage() . "\n");
+	exit(1);
+}

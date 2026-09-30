@@ -1,0 +1,9 @@
+{
+    "name": "schorschii/fastinfoset",
+    "description": "Dependency-free Fast Infoset encoder and decoder in pure PHP",
+    "type": "library",
+    "require": {"php": ">=8.1"},
+    "autoload": {"psr-4": {"FastInfoset\\": "src/"}},
+    "bin": ["bin/fi-decode", "bin/fi-encode"],
+    "scripts": {"test": "php tests/run.php"}
+}

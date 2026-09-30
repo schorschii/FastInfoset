@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+require dirname(__DIR__) . '/autoload.php';
+
+if ($argc > 2 || ($argc === 2 && in_array($argv[1], ['-h', '--help'], true))) {
+	fwrite(STDERR, 'Usage: fi-encode [input.xml|-] > output.fi'."\n");
+	exit($argc > 2 ? 2 : 0);
+}
+try {
+	$path = $argv[1] ?? '-';
+	$xml = @file_get_contents($path === '-' ? 'php://stdin' : $path);
+	if ($xml === false) {
+		throw new RuntimeException('Unable to read input');
+	}
+	$binary = (new FastInfoset\Encoder())->encode($xml);
+	if (fwrite(STDOUT, $binary) !== strlen($binary)) {
+		throw new RuntimeException('Unable to write output');
+	}
+} catch (Throwable $e) {
+	fwrite(STDERR, $e->getMessage() . "\n");
+	exit(1);
+}

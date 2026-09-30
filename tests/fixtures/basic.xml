@@ -1,0 +1,1 @@
+<?xml version="1.0"?><?test hello?><!--before--><root xmlns="urn:root" xmlns:p="urn:p" xml:lang="en"><p:item id="same">Hello &amp; 世界 😀</p:item><p:item id="same">Hello &amp; 世界 😀</p:item><empty/><scope xmlns=""><plain a="&quot;&lt;&#10;&#9;&#13;">text<![CDATA[<raw>]]><!--inside--></plain></scope></root><!--after-->
